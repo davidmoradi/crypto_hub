@@ -1,47 +1,56 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to CryptoHub!
-  </h1>
-  <!-- <div class="container" *ngFor="let item of frontResult">
-    {{item.long}}, Price: {{item.price}}
-  </div> -->
+<mat-toolbar color="primary" class="mat-elevation-z5">
+  <span>My Application</span>
+</mat-toolbar>
 
-  <div>
-    <ngx-datatable
-        class="dark"
-        [rows]="rows"
-        [loadingIndicator]="loadingIndicator"
-        [columnMode]="'force'"
-        [headerHeight]="40"
-        [footerHeight]="40"
-        [rowHeight]="'auto'"
-        [reorderable]="reorderable">
-        <ngx-datatable-column name="long"></ngx-datatable-column>
-        <ngx-datatable-column name="price" headerClass="is-gender"></ngx-datatable-column>
-        <ngx-datatable-column name="short"></ngx-datatable-column>
-        <ngx-datatable-column name="mktcap"></ngx-datatable-column>
-        <ngx-datatable-column name="perc"></ngx-datatable-column>
-    </ngx-datatable>
-
-  </div>
-
-
-      <!-- <head>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-      </head>
-
-      <body>
-          <div id='trade'> open console </div>
-      </body>
-
-      <script type="text/javascript">
-          var socket = io.connect('http://socket.coincap.io');
-          console.log(socket);
-          socket.on('trades', function (tradeMsg) {
-              console.log(tradeMsg);
-              document.getElementById('trade').innerHTML = JSON.stringify(tradeMsg)
-          })
-      </script> -->
-
+<div class="sk-folding-cube" *ngIf="loadingIndicator">
+  <div class="sk-cube1 sk-cube" color="primary"></div>
+  <div class="sk-cube2 sk-cube" color="primary"></div>
+  <div class="sk-cube4 sk-cube" color="primary"></div>
+  <div class="sk-cube3 sk-cube" color="primary"></div>
 </div>
+
+<div *ngIf="!loadingIndicator">
+  <mat-table [dataSource]="dataSource" style="margin-top:16px">
+
+    <ng-container matColumnDef="long">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.long}} ({{row.short}}) </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.price | currency}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mktcap">
+      <mat-header-cell *matHeaderCellDef> Market Cap </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.mktcap | currency}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="perc">
+      <mat-header-cell *matHeaderCellDef> Percentage </mat-header-cell>
+      <mat-cell *matCellDef="let row" [ngClass]="{'green-text' : row.perc >= 0, 'red-text' : row.perc < 0}"> {{row.perc}}% </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+</div>
+
+<!-- <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+</head>
+
+<body>
+    <div id='trade'> open console </div>
+</body>
+
+<script type="text/javascript">
+    var socket = io.connect('http://socket.coincap.io');
+    console.log(socket);
+    socket.on('trades', function (tradeMsg) {
+        console.log(tradeMsg);
+        document.getElementById('trade').innerHTML = JSON.stringify(tradeMsg)
+    })
+</script> -->

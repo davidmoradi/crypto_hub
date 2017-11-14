@@ -1,6 +1,9 @@
-import { Component , OnInit} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Component , OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { NgClass } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -8,50 +11,40 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  rows = [];
+  displayedColumns = ['long', 'price', 'mktcap', 'perc'];
+  dataSource: MatTableDataSource<FrontData>;
+
+  coins: any;
+  messages: object = {
+    emptyMessage: 'Fetching Data...',
+      totalMessage: 'total'
+  }
+
   loadingIndicator: boolean = true;
   reorderable: boolean = true;
 
-  // columns = [
-  //   { prop: 'Name' },
-  //   { name: 'Price' },
-  //   { name: 'Short' }
-  // ];
-  private frontResult = {};
-  private apiUrl = 'http://coincap.io/front'
+  private apiUrl: string = 'http://coincap.io/front'
   constructor(private http: HttpClient) {
-    this.fetch((data) => {
-      this.rows = data;
-      setTimeout(() => { this.loadingIndicator = false; }, 1500);
-    });
   }
 
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    // req.open('GET', this.apiUrl);
-    req.open('GET', 'assets/sample_data/front.json');
+  getFront() {
+    this.http.get(this.apiUrl)
+      .subscribe(data => {
+        this.coins = data;
+        setTimeout(() => { this.loadingIndicator = false; }, 1300)
+        this.dataSource = new MatTableDataSource(this.coins);
+      });
 
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
   }
 
-  // getFront() {
-  //   // return this.http.get(this.apiUrl)
-  //   //   .map((res: HttpResponse) => res.json())
-  //   //   .subscribe(data => {
-  //   //     console.log(data)
-  //   //   })
-  //   this.http.get(this.apiUrl)
-  //     .subscribe(data => {
-  //       // Read the result field from the JSON response.
-  //       this.frontResult = data
-  //     });
-  // }
-  //
   ngOnInit() {
-    console.log('component initiliazed')
+    this.getFront();
   }
+}
+
+export interface FrontData {
+  long: string,
+  price: number,
+  perc: number,
+  mktcap: number
 }
