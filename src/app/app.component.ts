@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   loadingIndicator: boolean = true;
   reorderable: boolean = true;
 
-  private apiUrl: string = 'http://coincap.io/front'
+  private apiUrl: string = 'https://coincap.io/front'
   constructor(private http: HttpClient) {
   }
 
