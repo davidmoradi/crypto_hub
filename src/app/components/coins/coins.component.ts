@@ -16,6 +16,7 @@ import { CoincapService } from '../../services/coincap.service'
 export class CoinsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['long', 'price', 'perc', 'mktcap'];
   dataSource: MatTableDataSource<FrontData>;
+  liveUpdateSelected: boolean = false
   subscription: any;
 
   coins: any;
