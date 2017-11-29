@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="mat-elevation-z5">
+  <span> Crypto Monitoring App</span>
+</mat-toolbar>
+
+<div class="sk-folding-cube" *ngIf="loadingIndicator">
+  <div class="sk-cube1 sk-cube" color="primary"></div>
+  <div class="sk-cube2 sk-cube" color="primary"></div>
+  <div class="sk-cube4 sk-cube" color="primary"></div>
+  <div class="sk-cube3 sk-cube" color="primary"></div>
+</div>
+
+<coins (loadingIndicatorEvent)="receiveMessage($event)"></coins>

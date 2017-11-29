@@ -1,0 +1,23 @@
+section {
+  padding: 16px 16px 0 16px;
+}
+
+.green-text {
+  color: green;
+}
+
+.red-text {
+  color: red;
+}
+
+.coin_dump {
+  color: #ce5c5c;
+  background-color: white;
+  transition: background-color 1s;
+}
+
+.coin_pump {
+  color: #6ca82e;
+  background-color: #6ca82e;
+  transition: background-color 1s;
+}

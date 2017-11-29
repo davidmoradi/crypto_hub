@@ -1,0 +1,34 @@
+<section>
+  <mat-slide-toggle [checked]="liveUpdateSelected" (change)="liveUpdateToggle($event)">
+    Enable live update
+  </mat-slide-toggle>
+</section>
+
+<div *ngIf="!loadingIndicator">
+  <mat-table [dataSource]="dataSource" style="margin-top:16px">
+
+    <ng-container matColumnDef="long">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.long}} ({{row.short}}) </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.price | currency}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="perc">
+      <mat-header-cell *matHeaderCellDef> Percentage </mat-header-cell>
+      <mat-cell *matCellDef="let row" [ngClass]="{'green-text' : row.perc >= 0, 'red-text' : row.perc < 0}"> {{row.perc}}% ({{ ((row.perc/ 100)*row.price) | currency}} )</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mktcap">
+      <mat-header-cell *matHeaderCellDef> Market Cap </mat-header-cell>
+      <mat-cell *matCellDef="let row"> ${{row.mktcap | currencyShortner}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" id="{{row.short}}">
+    </mat-row>
+  </mat-table>
+</div>

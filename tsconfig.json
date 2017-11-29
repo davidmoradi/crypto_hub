@@ -15,5 +15,10 @@
       "es2017",
       "dom"
     ]
-  }
+  },
+  "include": [
+    "src/main.ts",
+    "src/polyfills.ts",
+    "node_modules/ng-socket-io/socket-io.module.ts"
+  ]
 }
