@@ -1,3 +1,7 @@
-<p>
-  coin works!
-</p>
+<div *ngIf="!loadingIndicator">
+  <div>
+    <div class="sprite sprite-{{trimWhiteSpace(coin.display_name) | lowercase}}"></div>
+    {{ coin.display_name }} {{ coin.id }}
+  </div>
+  <div> Price: {{ coin.price | currency }}</div>
+</div>

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatInputModule } from '@angular/material';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 import { CoincapService } from './services/coincap.service'
@@ -19,7 +20,7 @@ import { CurrencyShortnerPipe } from './pipes/currency-shortner.pipe';
 const config: SocketIoConfig = { url: 'http://socket.coincap.io', options: {} };
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'coin/:id', component: CoinComponent },
+  { path: 'coin/:name', component: CoinComponent },
   // { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatTableModule,
     MatSlideToggleModule,
+    MatInputModule,
     SocketIoModule.forRoot(config),
     RouterModule.forRoot(appRoutes)
   ],

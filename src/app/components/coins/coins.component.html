@@ -2,6 +2,11 @@
   <mat-slide-toggle [checked]="liveUpdateSelected" (change)="liveUpdateToggle($event)">
     Enable live update
   </mat-slide-toggle>
+<section>
+</section>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search for any coin">
+  </mat-form-field>
 </section>
 
 <div *ngIf="!loadingIndicator">
@@ -9,7 +14,7 @@
 
     <ng-container matColumnDef="long">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.long}} ({{row.short}}) </mat-cell>
+      <mat-cell *matCellDef="let row"> <div class="sprite sprite-{{trimWhiteSpace(row.long) | lowercase}}"></div> <div> {{row.long}} </div> </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="price">
@@ -28,7 +33,7 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" id="{{row.short}}">
+      <mat-row *matRowDef="let row; columns: displayedColumns;" id="{{row.short}}" routerLink="/coin/{{row.short}}">>
     </mat-row>
   </mat-table>
 </div>

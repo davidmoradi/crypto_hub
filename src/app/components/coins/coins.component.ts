@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatInputModule } from '@angular/material';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { NgClass } from '@angular/common';
-import { CurrencyPipe } from '@angular/common';
+import { NgClass, CurrencyPipe, LowerCasePipe  } from '@angular/common';
 import { CoincapService } from '../../services/coincap.service'
 
 @Component({
@@ -39,10 +38,10 @@ export class CoinsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getFront({firstCall: true});
 
-    // update front table data every 15 seconds.
+    // update front table data every 30 seconds.
     setInterval(() => {
       this.getFront({firstCall: false});
-    }, 15000);
+    }, 30000);
   }
 
   ngAfterViewInit() {
@@ -112,6 +111,16 @@ export class CoinsComponent implements OnInit, AfterViewInit {
   showLoadingIndicator(show) {
     this.loadingIndicator = show
     this.loadingIndicatorEvent.emit(show)
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim()
+    filterValue = filterValue.toLowerCase()
+    this.dataSource.filter = filterValue
+  }
+
+   trimWhiteSpace(message) {
+    return message.replace(/\s/g, '');
   }
 
 }
